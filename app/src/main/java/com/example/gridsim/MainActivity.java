@@ -20,14 +20,14 @@ public class MainActivity extends AppCompatActivity {
         btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "Number 1's text", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Number 1's text", Toast.LENGTH_SHORT).show();
             }
         });
 
         btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "Number 2's text", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Number 2's text", Toast.LENGTH_SHORT).show();
             }
         });
 
