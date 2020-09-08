@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     Button btn1;
     Button btn2;
+    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +34,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        gridView = (GridView) findViewById(R.id.grid);
+        GridAdapter adapter = new GridAdapter();
+        gridView.setAdapter(adapter);
     }
 }
