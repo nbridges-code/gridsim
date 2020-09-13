@@ -1,13 +1,21 @@
 package com.example.gridsim;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 
 public class GridAdapter extends BaseAdapter {
+    private Context mContext;
+    public GridAdapter(Context c){
+        mContext = c;
+    }
+
     @Override
     public int getCount() {
-        return 0;
+        return images.length;
     }
 
     @Override
@@ -22,6 +30,15 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        ImageView imageView = new ImageView(mContext);
+        imageView.setLayoutParams(new GridView.LayoutParams(50, 50));
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setPadding(8, 8, 8, 8);
+        imageView.setImageResource(images[i]);
+        return imageView;
     }
+
+    public Integer[] images = {
+            R.drawable.dot, R.drawable.square
+    };
 }

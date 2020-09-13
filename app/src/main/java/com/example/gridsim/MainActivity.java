@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
+import android.widget.AdapterView;
 
 public class MainActivity extends AppCompatActivity {
     Button btn1;
@@ -34,7 +35,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        gridView = (GridView) findViewById(R.id.grid);
+        GridView gridView = (GridView) findViewById(R.id.grid);
+        gridView.setAdapter(new GridAdapter(this));
+        // This happens after a click on an icon. \/
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(MainActivity.this, "Image Position: " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
 //        GridAdapter adapter = new GridAdapter();
 //        gridView.setAdapter(adapter);
     }
