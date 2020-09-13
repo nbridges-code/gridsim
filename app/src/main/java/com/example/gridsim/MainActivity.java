@@ -8,8 +8,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +64,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
         GridView gridView = (GridView) findViewById(R.id.grid);
+
+
+        final TextView textView = (TextView) findViewById(R.id.text);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://stman1.cs.unh.edu:6191/games";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        textView.setText("Response is: "+ response.substring(0,5));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                textView.setText("That didn't work!");
+            }
+        });
+
+        queue.add(stringRequest);
+
+
+
         gridView.setAdapter(new GridAdapter(this));
         // This happens after a click on an icon. \/
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,7 +96,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Image Position: " + position, Toast.LENGTH_SHORT).show();
             }
         });
-//        GridAdapter adapter = new GridAdapter();
-//        gridView.setAdapter(adapter);
     }
 }
