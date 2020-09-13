@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         gridView = (GridView) findViewById(R.id.grid);
-        GridAdapter adapter = new GridAdapter();
-        gridView.setAdapter(adapter);
+//        GridAdapter adapter = new GridAdapter();
+//        gridView.setAdapter(adapter);
     }
 }
