@@ -11,6 +11,9 @@ import android.widget.GridView;
 import android.widget.Toast;
 import android.widget.AdapterView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     Button btn1;
     Button btn2;
@@ -20,6 +23,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        JSONObject square = new JSONObject();
+        try {
+            square.put("img", R.drawable.square);
+            square.put("value", 0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject dot = new JSONObject();
+        try {
+            dot.put("img", R.drawable.dot);
+            dot.put("value", 1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
