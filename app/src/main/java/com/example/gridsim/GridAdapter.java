@@ -9,13 +9,23 @@ import android.widget.ImageView;
 
 public class GridAdapter extends BaseAdapter {
     private Context mContext;
+    public int stateArray[] = new int[256];
+
+    public int[] getStateArray() {
+        return stateArray;
+    }
+
+    public void setStateArray(int index, int value){
+        stateArray[index] = value;
+    }
+
     public GridAdapter(Context c){
         mContext = c;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return 256;
     }
 
     @Override
@@ -32,11 +42,15 @@ public class GridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ImageView imageView = new ImageView(mContext);
         imageView.setLayoutParams(new GridView.LayoutParams(50, 50));
-        imageView.setImageResource(images[i]);
+        if(stateArray[i] == 0){
+            imageView.setImageResource(images[0]);
+        }else{
+            imageView.setImageResource(images[1]);
+        }
         return imageView;
     }
 
     public Integer[] images = {
-            R.drawable.dot, R.drawable.square
+            R.drawable.square, R.drawable.dot
     };
 }
