@@ -7,15 +7,17 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import org.json.JSONObject;
+
 public class GridAdapter extends BaseAdapter {
     private Context mContext;
     public int stateArray[] = new int[256];
 
-    public int[] getStateArray() {
-        return stateArray;
+    public int getStateArrayValue(int index) {
+        return stateArray[index];
     }
 
-    public void setStateArray(int index, int value){
+    public void setStateArrayValue(int index, int value){
         stateArray[index] = value;
     }
 

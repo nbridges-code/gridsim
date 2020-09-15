@@ -18,6 +18,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -25,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.*;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     Button btn1;
@@ -36,23 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-/*
-        JSONObject square = new JSONObject();
-        try {
-            square.put("img", R.drawable.square);
-            square.put("value", 0);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JSONObject dot = new JSONObject();
-        try {
-            dot.put("img", R.drawable.dot);
-            dot.put("value", 1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-*/
 
 
         btn1 = (Button) findViewById(R.id.button1);
@@ -69,16 +56,40 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        GridView gridView = (GridView) findViewById(R.id.grid);
+        final GridView gridView = (GridView) findViewById(R.id.grid);
+        final GridAdapter gridAdapter = new GridAdapter(this);
+        gridView.setAdapter(gridAdapter);
 
+        final JSONObject serverResponse;
         final TextView textView = (TextView) findViewById(R.id.text);
+        final int[] info = new int[256];
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://stman1.cs.unh.edu:6191/games";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        textView.setText(response);
+                    public void onResponse(JSONObject response) {
+                        //Log.d(TAG, "Server response: " + response.toString());
+                        try {
+                            JSONArray array = (JSONArray) response.get("grid");
+                            for(int i = 0; i < 256; i++){
+                                info[i] = (int) array.getJSONArray(i/16).get(i%16);
+                                //Log.d(TAG, i + ": " + info[i]);
+                                gridAdapter.setStateArrayValue(i, info[i]);
+                            }
+                            gridView.invalidateViews();
+/*
+                            for(int i = 0; i < 16; i++) {
+                                Log.d(TAG, i + ": " + array.getJSONArray(i).toString());
+                                for(int j = 0; j < 16; j++){
+                                    info[track[0]] = (int) array.getJSONArray(i).get(j);
+                                    track[0]++;
+                                }
+                            }
+*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -86,25 +97,18 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText("That didn't work!");
             }
         });
-        queue.add(stringRequest);
-        int[] serverData = new int[255];
-        Object temp = null;
-        try {
-            temp = new JSONObject((String) textView.getText());
-            Log.d(TAG, temp.toString());
-        } catch (JSONException e) {
-            Log.d(TAG, "JSON Exception");
-            e.printStackTrace();
-        }
+        queue.add(request);
 
-
-        gridView.setAdapter(new GridAdapter(this));
 
         // This happens after a click on an icon. \/
+        final TextView pos = (TextView) findViewById(R.id.pos);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(MainActivity.this, "Image Position: " + position + " contains ?", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Location: " + position);
+                int x = (position/16)+1;
+                int y = (position%16)+1;
+                pos.setText( "Image Position: (row: " + x + ", col: " + y + ") / index:"+ position + " contains " + gridAdapter.getStateArrayValue(position));
+                //Toast.makeText(MainActivity.this, "Image Position: " + position + " contains " + gridAdapter.getStateArrayValue(position), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Location: (row: " + x + ", col: " + y + ") / index:"+position + " has value: " + gridAdapter.getStateArrayValue(position));
             }
         });
     }
