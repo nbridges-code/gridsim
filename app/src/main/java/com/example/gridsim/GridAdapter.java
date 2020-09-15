@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-
 import org.json.JSONObject;
 
 public class GridAdapter extends BaseAdapter {
@@ -44,7 +43,7 @@ public class GridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ImageView imageView = new ImageView(mContext);
         imageView.setLayoutParams(new GridView.LayoutParams(50, 50));
-        if(stateArray[i] == 0){
+        if(stateArray[i] == 0) {
             imageView.setImageResource(images[0]);
         }else{
             imageView.setImageResource(images[1]);

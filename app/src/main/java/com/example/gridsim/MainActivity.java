@@ -78,15 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                 gridAdapter.setStateArrayValue(i, info[i]);
                             }
                             gridView.invalidateViews();
-/*
-                            for(int i = 0; i < 16; i++) {
-                                Log.d(TAG, i + ": " + array.getJSONArray(i).toString());
-                                for(int j = 0; j < 16; j++){
-                                    info[track[0]] = (int) array.getJSONArray(i).get(j);
-                                    track[0]++;
-                                }
-                            }
-*/
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -107,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 int x = (position/16)+1;
                 int y = (position%16)+1;
                 pos.setText( "Image Position: (row: " + x + ", col: " + y + ") / index:"+ position + " contains " + gridAdapter.getStateArrayValue(position));
-                //Toast.makeText(MainActivity.this, "Image Position: " + position + " contains " + gridAdapter.getStateArrayValue(position), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Location: (row: " + x + ", col: " + y + ") / index:"+position + " has value: " + gridAdapter.getStateArrayValue(position));
             }
         });
