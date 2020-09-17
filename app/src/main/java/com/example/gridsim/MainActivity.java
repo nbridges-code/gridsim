@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
@@ -55,38 +54,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        final GridView gridView = (GridView) findViewById(R.id.grid);
+        final GridView gridView = findViewById(R.id.grid);
         final GridAdapter gridAdapter = new GridAdapter(this);
         gridView.setAdapter(gridAdapter);
 
-        final JSONObject serverResponse;
-        final TextView textView = (TextView) findViewById(R.id.text);
         final int[] info = new int[256];
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://stman1.cs.unh.edu:6191/games";
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.d(TAG, "Server response: " + response.toString());
+
                         try {
                             JSONArray array = (JSONArray) response.get("grid");
                             for(int i = 0; i < 256; i++){
                                 info[i] = (int) array.getJSONArray(i/16).get(i%16);
-                                //Log.d(TAG, i + ": " + info[i]);
-                                gridAdapter.setStateArrayValue(i, info[i]);
                             }
+                            gridAdapter.refreshStateArray(info);
                             gridView.invalidateViews();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                textView.setText("That didn't work!");
+                Log.e(TAG, "VolleyError");
             }
         });
         queue.add(request);
@@ -96,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView pos = (TextView) findViewById(R.id.pos);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                int x = (position/16)+1;
-                int y = (position%16)+1;
+                int x = (position/16);
+                int y = (position%16);
                 pos.setText( "Image Position: (row: " + x + ", col: " + y + ") / index:"+ position + " contains " + gridAdapter.getStateArrayValue(position));
                 Log.d(TAG, "Location: (row: " + x + ", col: " + y + ") / index:"+position + " has value: " + gridAdapter.getStateArrayValue(position));
             }

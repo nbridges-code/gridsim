@@ -16,8 +16,8 @@ public class GridAdapter extends BaseAdapter {
         return stateArray[index];
     }
 
-    public void setStateArrayValue(int index, int value){
-        stateArray[index] = value;
+    public void refreshStateArray(int[] array){
+        System.arraycopy(array, 0, stateArray, 0, 256);
     }
 
     public GridAdapter(Context c){
@@ -52,6 +52,8 @@ public class GridAdapter extends BaseAdapter {
     }
 
     public Integer[] images = {
-            R.drawable.square, R.drawable.dot
+            R.drawable.blank, R.drawable.bushes, R.drawable.clover, R.drawable.gardender_icon,
+            R.drawable.golfcart_icon, R.drawable.mushroom, R.drawable.shovel_icon,
+            R.drawable.sunflower, R.drawable.tree
     };
 }
