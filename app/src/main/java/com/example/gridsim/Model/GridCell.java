@@ -9,6 +9,10 @@ public class GridCell {
 
     public int rawServerValue = -1, row = -1, col = -1;
 
+    public GridCell(int rawServerValue){
+
+    }
+
     public Integer getResourceID() { // returns the appropriate image resource identifier. Default: Empty
         return -1;
     }

@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.gridsim.Model.GridCell;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         final GridAdapter gridAdapter = new GridAdapter(this);
         gridView.setAdapter(gridAdapter);
 
+        final GridCell[] gridCells = new GridCell[256];
         final int[] info = new int[256];
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://stman1.cs.unh.edu:6191/games";
