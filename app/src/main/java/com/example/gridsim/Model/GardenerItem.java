@@ -3,13 +3,17 @@ package com.example.gridsim.Model;
 public class GardenerItem extends GridCell{
     private int resourceID = -1;
 
+    public GardenerItem(int rawServerValue) {
+        this.rawServerValue = rawServerValue;
+    }
+
     public String getCellType() { // returns a string description of the object type in the cell
         if(rawServerValue >= 1000000 && rawServerValue < 2000000){
             return "Gardener";
         }else if(rawServerValue >= 2000000 && rawServerValue < 3000000){
             return "Shovel";
         }else if(rawServerValue >= 10000000 && rawServerValue < 20000000){
-            return "Clover";
+            return "Cart";
         }else{
             return "INCORRECT_VALUE";
         }

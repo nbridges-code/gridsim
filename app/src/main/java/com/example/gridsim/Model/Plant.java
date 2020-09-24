@@ -1,6 +1,11 @@
 package com.example.gridsim.Model;
 
 public class Plant extends GridCell {
+
+    public Plant(int rawServerValue) {
+        this.rawServerValue = rawServerValue;
+    }
+
     public String getCellType() { // returns a string description of the object type in the cell
         if(rawServerValue == 1000){
             return "Tree";

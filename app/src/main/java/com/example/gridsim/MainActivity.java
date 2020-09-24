@@ -23,6 +23,8 @@ import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gridsim.Model.GridCell;
+import com.example.gridsim.Model.GridCellFactory;
+import com.example.gridsim.Model.SimulationGrid;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     Button btn2;
     GridView gridView;
     private static final String TAG = "gridView";
+    SimulationGrid grid = new SimulationGrid();
+    GridCellFactory factory = new GridCellFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         final GridAdapter gridAdapter = new GridAdapter(this);
         gridView.setAdapter(gridAdapter);
 
-        final GridCell[] gridCells = new GridCell[256];
+
         final int[] info = new int[256];
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://stman1.cs.unh.edu:6191/games";
@@ -72,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONArray array = (JSONArray) response.get("grid");
                             for(int i = 0; i < 256; i++){
-                                info[i] = (int) array.getJSONArray(i/16).get(i%16);
+                                grid.setCell(i, factory.makeCell((int) array.getJSONArray(i/16).get(i%16)));
+                                //info[i] = (int) array.getJSONArray(i/16).get(i%16);
+                                //Log.d("gridView", "my name jeff"+grid.getCell(i).getCellType());
                             }
+                            gridAdapter.copySimulationGrid(grid);
                             gridAdapter.refreshStateArray(info);
                             gridView.invalidateViews();
 
@@ -102,4 +109,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

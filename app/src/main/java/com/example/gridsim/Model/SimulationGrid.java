@@ -5,7 +5,11 @@ public class SimulationGrid {
     SimulationGrid: This is basically a collection that holds GridCells in array form
     for quicker access. It has the following responsibilities:
 */
-    GridCell[] grid = new GridCell[256];
+    GridCell[] grid;
+
+    public SimulationGrid(){
+        grid = new GridCell[256];
+    }
 
     public GridCell getCell(int index) { // returns the GridCell at a given linear index
         return grid[index];
