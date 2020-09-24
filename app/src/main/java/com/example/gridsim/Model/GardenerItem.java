@@ -1,5 +1,7 @@
 package com.example.gridsim.Model;
 
+import android.util.Log;
+
 public class GardenerItem extends GridCell{
     private int resourceID = -1;
 
@@ -27,14 +29,16 @@ public class GardenerItem extends GridCell{
             return resourceID;
         }
         if(rawServerValue >= 1000000 && rawServerValue < 2000000){
-            resourceID = rawServerValue % 1000;
+            resourceID = Integer.parseInt(Integer.toString(rawServerValue).substring(0, 1));
         }else if(rawServerValue >= 2000000 && rawServerValue < 3000000){
-            resourceID = rawServerValue % 1000;
+            resourceID = rawServerValue % 100;
         }else if(rawServerValue >= 10000000 && rawServerValue < 20000000){
-            resourceID = rawServerValue % 10000;
+            resourceID = rawServerValue % 1000;
         }else{
             return -1;
         }
+
+        Log.d("gridView", "ID: " + rawServerValue);
         return resourceID;
     }
 }

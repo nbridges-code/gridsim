@@ -102,7 +102,12 @@ public class MainActivity extends AppCompatActivity {
         final TextView pos = (TextView) findViewById(R.id.pos);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo() + grid.getCell(position).getCellType());
+                if(grid.getCell(position).getResourceID() != -1){
+                    pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
+                } else {
+                    pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo());
+                }
+
                 Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
                 /* Milestone 2
                 int x = (position/16);
