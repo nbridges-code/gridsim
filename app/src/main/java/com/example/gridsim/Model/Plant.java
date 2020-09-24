@@ -2,8 +2,11 @@ package com.example.gridsim.Model;
 
 public class Plant extends GridCell {
 
-    public Plant(int rawServerValue) {
+    public Plant(int rawServerValue, int location) {
         this.rawServerValue = rawServerValue;
+        row = location / 16;
+        col = location % 16;
+        this.location = location;
     }
 
     public String getCellType() { // returns a string description of the object type in the cell

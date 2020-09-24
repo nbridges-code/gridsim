@@ -3,8 +3,11 @@ package com.example.gridsim.Model;
 public class GardenerItem extends GridCell{
     private int resourceID = -1;
 
-    public GardenerItem(int rawServerValue) {
+    public GardenerItem(int rawServerValue, int location) {
         this.rawServerValue = rawServerValue;
+        row = location / 16;
+        col = location % 16;
+        this.location = location;
     }
 
     public String getCellType() { // returns a string description of the object type in the cell

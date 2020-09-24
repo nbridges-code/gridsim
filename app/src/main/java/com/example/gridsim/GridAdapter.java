@@ -54,37 +54,33 @@ public class GridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ImageView imageView = new ImageView(mContext);
         imageView.setLayoutParams(new GridView.LayoutParams(50, 50));
-        if(copy == null){
-            imageView.setImageResource(images[0]);
-            return imageView;
-        }
-        if(copy.getCell(i) == null){
+        if(copy == null || copy.getCell(i) == null){
             imageView.setImageResource(images[0]);
             return imageView;
         }
         switch (copy.getCell(i).getCellType()) {
-            case "Tree":
+            case "Bush":
                 imageView.setImageResource(images[1]);
                 break;
-            case "Bush":
+            case "Clover":
                 imageView.setImageResource(images[2]);
                 break;
-            case "Clover":
+            case "Gardener":
                 imageView.setImageResource(images[3]);
                 break;
-            case "Mushroom":
+            case "Cart":
                 imageView.setImageResource(images[4]);
                 break;
-            case "Sunflower":
+            case "Mushroom":
                 imageView.setImageResource(images[5]);
                 break;
-            case "Gardener":
+            case "Shovel":
                 imageView.setImageResource(images[6]);
                 break;
-            case "Shovel":
+            case "Sunflower":
                 imageView.setImageResource(images[7]);
                 break;
-            case "Cart":
+            case "Tree":
                 imageView.setImageResource(images[8]);
                 break;
             default:

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONArray array = (JSONArray) response.get("grid");
                             for(int i = 0; i < 256; i++){
-                                grid.setCell(i, factory.makeCell((int) array.getJSONArray(i/16).get(i%16)));
+                                grid.setCell(i, factory.makeCell((int) array.getJSONArray(i/16).get(i%16), i));
                                 //info[i] = (int) array.getJSONArray(i/16).get(i%16);
                                 //Log.d("gridView", "my name jeff"+grid.getCell(i).getCellType());
                             }
@@ -102,10 +102,14 @@ public class MainActivity extends AppCompatActivity {
         final TextView pos = (TextView) findViewById(R.id.pos);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo() + grid.getCell(position).getCellType());
+                Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
+                /* Milestone 2
                 int x = (position/16);
                 int y = (position%16);
                 pos.setText( "Image Position: (row: " + x + ", col: " + y + ") / index:"+ position + " contains " + gridAdapter.getStateArrayValue(position));
                 Log.d(TAG, "Location: (row: " + x + ", col: " + y + ") / index:"+position + " has value: " + gridAdapter.getStateArrayValue(position));
+                 */
             }
         });
     }

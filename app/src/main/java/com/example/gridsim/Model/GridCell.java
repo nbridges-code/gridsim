@@ -9,17 +9,21 @@ public class GridCell {
     the following responsibilities (which may each be overridden in child classes):
 */
 
-    public int rawServerValue = -1, row = -1, col = -1;
+    public int rawServerValue = 0, location = -1, row = -1, col = -1;
 
     public GridCell(){}
 
-    public GridCell(int rawServerValue){
-        rawServerValue = this.rawServerValue;
+    public GridCell(int rawServerValue, int location){
+        this.rawServerValue = rawServerValue;
+        row = location / 16;
+        col = location % 16;
+        this.location = location;
     }
 
     public Integer getResourceID() { // returns the appropriate image resource identifier. Default: Empty
         return -1;
     }
+
     public String getCellType() { // returns a string description of the object type in the cell
         if(rawServerValue == 0){
             return "Empty";
@@ -40,11 +44,11 @@ public class GridCell {
         }else if(rawServerValue >= 10000000 && rawServerValue < 20000000){
             return "Cart";
         }else{
-            return "INCORRECT_VALUE";
+            return String.valueOf(rawServerValue);
         }
     }
     public String getCellInfo() { // returns a string describing other info about the object (such as location)
-        return "(row:" + row + ", col:" + col + ")";
+        return "(row:" + row + ", col:" + col + ") at index:" + location;
     }
 
 }
