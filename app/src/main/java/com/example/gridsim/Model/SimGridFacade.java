@@ -1,0 +1,63 @@
+package com.example.gridsim.Model;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.TextView;
+
+import com.example.gridsim.GridAdapter;
+import com.example.gridsim.MainActivity;
+import com.example.gridsim.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class SimGridFacade {
+    MainActivity main;
+    GridView gridView;
+    GridAdapter gridAdapter;
+    SimulationGrid grid;
+    GridCellFactory factory;
+    private static final String TAG = "gridView";
+
+    public SimGridFacade(MainActivity act, Context c){
+        main = act;
+        gridView = main.findViewById(R.id.grid);
+        gridAdapter = new GridAdapter(c);
+        gridView.setAdapter(gridAdapter);
+        grid = new SimulationGrid();
+        factory = new GridCellFactory();
+    }
+
+    public void setUsingJSON(JSONObject res) throws JSONException { // fills the active SimulationGrid with appropriate information from JSON Array coming from the server
+        JSONArray array = null;
+        try {
+            array = (JSONArray) res.get("grid");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < 256; i++){
+            grid.setCell(i, factory.makeCell((int) array.getJSONArray(i/16).get(i%16), i));
+        }
+        gridAdapter.copySimulationGrid(grid);
+        gridView.invalidateViews();
+    }
+
+    public void displayPosition(){
+        final TextView pos = (TextView) main.findViewById(R.id.pos);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                if(grid.getCell(position).getResourceID() != -1){
+                    pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
+                    Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
+                } else {
+                    pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo());
+                    Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
+                }
+            }
+        });
+    }
+}
