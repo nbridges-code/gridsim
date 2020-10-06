@@ -11,6 +11,8 @@ import com.example.gridsim.GridAdapter;
 import com.example.gridsim.MainActivity;
 import com.example.gridsim.R;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

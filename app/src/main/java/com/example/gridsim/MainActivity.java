@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gridsim.Model.GridCell;
 import com.example.gridsim.Model.GridCellFactory;
+import com.example.gridsim.Model.GridEvent;
 import com.example.gridsim.Model.SimGridFacade;
 import com.example.gridsim.Model.SimulationGrid;
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://stman1.cs.unh.edu:6191/games";
+        GridEvent gridtest = new GridEvent();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
