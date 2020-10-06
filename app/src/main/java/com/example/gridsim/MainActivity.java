@@ -4,42 +4,17 @@ package com.example.gridsim;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.JsonReader;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.gridsim.Model.GridCell;
-import com.example.gridsim.Model.GridCellFactory;
-import com.example.gridsim.Model.GridEvent;
 import com.example.gridsim.Model.SimGridFacade;
-import com.example.gridsim.Model.SimulationGrid;
-
-import org.greenrobot.eventbus.EventBus;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.*;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     Button btn1;
     Button btn2;
     private static final String TAG = "gridView";
+    private static Poller poller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +34,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final SimGridFacade facade = new SimGridFacade(MainActivity.this, this);
-
-        Poller poller = new Poller(this);
-
-        //EventBus.getDefault().....?
+        SimGridFacade facade = new SimGridFacade(MainActivity.this, this);
+        poller = Poller.getInstance(this);
 
         facade.displayPosition();
     }

@@ -23,9 +23,17 @@ import java.util.concurrent.TimeUnit;
 public class Poller {
     private static final String TAG = "gridView";
     private static final String url = "http://stman1.cs.unh.edu:6191/games";
+    private static Poller _poller;
     RequestQueue queue;
 
-    public Poller(Context context){
+    public static Poller getInstance(Context c){
+        if(_poller == null){
+            _poller = new Poller(c);
+        }
+        return _poller;
+    }
+
+    private Poller(Context context){
         queue = Volley.newRequestQueue(context);
     }
 
@@ -50,7 +58,7 @@ public class Poller {
                 }
             });
             queue.add(request);
-            Log.d("Poller", "Grabbed here");
+            Log.d(TAG, "Response Received");
         }
     };
 
