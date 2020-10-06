@@ -28,6 +28,7 @@ import com.example.gridsim.Model.GridEvent;
 import com.example.gridsim.Model.SimGridFacade;
 import com.example.gridsim.Model.SimulationGrid;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -60,29 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         final SimGridFacade facade = new SimGridFacade(MainActivity.this, this);
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://stman1.cs.unh.edu:6191/games";
-        GridEvent gridtest = new GridEvent();
+        Poller poller = new Poller(this);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            facade.setUsingJSON(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "VolleyError");
-            }
-        });
-        queue.add(request);
+        //EventBus.getDefault().....?
 
         facade.displayPosition();
     }

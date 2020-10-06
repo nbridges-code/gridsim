@@ -6,6 +6,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class GridEventSubscriber{
+    /*
     @Subscribe
     public void GridEventSubscriber(GridEvent gridEvent){
         Log.d("GridView_test", "GridEventSubscriber called");
@@ -19,7 +20,8 @@ public class GridEventSubscriber{
 
     @Override
     public void onStop(){
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().unregister(this);
         super.onStop();
     }
+     */
 }

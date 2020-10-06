@@ -11,6 +11,7 @@ import com.example.gridsim.GridAdapter;
 import com.example.gridsim.MainActivity;
 import com.example.gridsim.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
@@ -32,8 +33,10 @@ public class SimGridFacade {
         gridView.setAdapter(gridAdapter);
         grid = new SimulationGrid();
         factory = new GridCellFactory();
+        EventBus.getDefault().register(this);
     }
 
+    @Subscribe
     public void setUsingJSON(JSONObject res) throws JSONException { // fills the active SimulationGrid with appropriate information from JSON Array coming from the server
         JSONArray array = null;
         try {
