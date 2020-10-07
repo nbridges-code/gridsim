@@ -4,6 +4,7 @@ package com.example.gridsim;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "Number 1's text", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "");
             }
         });
         btn2 = (Button) findViewById(R.id.button2);

@@ -2,10 +2,13 @@ package com.example.gridsim.Model;
 
 import android.util.Log;
 
+
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class GardenerItem extends GridCell{
     private LinkedList<String> history = new LinkedList<>();
+    private String historyNode = "";
 
     public GardenerItem(int rawServerValue, int location) {
         this.rawServerValue = rawServerValue;
@@ -31,6 +34,14 @@ public class GardenerItem extends GridCell{
     }
 
     public void updateLocation(int location){
+        row = location / 16;
+        col = location % 16;
+        historyNode = "(" + row + ", " + col +") " + new java.sql.Timestamp(System.currentTimeMillis());
+        history.add(historyNode);
         this.location = location;
+    }
+
+    public String getHistory(){
+        return history.toString();
     }
 }
