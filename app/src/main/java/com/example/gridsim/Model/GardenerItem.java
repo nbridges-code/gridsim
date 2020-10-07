@@ -2,7 +2,10 @@ package com.example.gridsim.Model;
 
 import android.util.Log;
 
+import java.util.LinkedList;
+
 public class GardenerItem extends GridCell{
+    private LinkedList<String> history = new LinkedList<>();
 
     public GardenerItem(int rawServerValue, int location) {
         this.rawServerValue = rawServerValue;
@@ -24,7 +27,10 @@ public class GardenerItem extends GridCell{
     }
 
     public Integer getResourceID() { // returns the appropriate image resource identifier. Default: Empty
-        int resourceID = Integer.parseInt(Integer.toString(rawServerValue).substring(1, 4));
-        return resourceID;
+        return Integer.parseInt(Integer.toString(rawServerValue).substring(1, 4));
+    }
+
+    public void updateLocation(int location){
+        this.location = location;
     }
 }
