@@ -36,12 +36,12 @@ public class GardenerItem extends GridCell{
     public void updateLocation(int location){
         row = location / 16;
         col = location % 16;
-        historyNode = "(" + row + ", " + col +") " + new java.sql.Timestamp(System.currentTimeMillis());
+        historyNode = "(" + row + ", " + col +") " + new java.sql.Timestamp(System.currentTimeMillis()) + "\n";
         history.add(historyNode);
         this.location = location;
     }
 
-    public String getHistory(){
-        return history.toString();
+    public String getCellInfo() { // returns a string describing other info about the object (such as location)
+        return "(row:" + row + ", col:" + col + ") at index:" + location + "\n" + history.toString();
     }
 }

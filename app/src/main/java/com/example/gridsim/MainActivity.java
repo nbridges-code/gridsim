@@ -3,6 +3,7 @@ package com.example.gridsim;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,23 +23,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final SimGridFacade facade = new SimGridFacade(MainActivity.this, this);
+        poller = Poller.getInstance(this);
+
+        facade.displayPosition();
+
         btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                Log.d(TAG, "");
+                // pause
             }
         });
         btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "Number 2's text", Toast.LENGTH_SHORT).show();
+                showHistory(facade.currentCellInfo());
+                // Log.d(TAG, facade.currentCellInfo());
             }
         });
+    }
 
-        SimGridFacade facade = new SimGridFacade(MainActivity.this, this);
-        poller = Poller.getInstance(this);
-
-        facade.displayPosition();
+    public void showHistory(String history){
+        Intent intent = new Intent(this, HistoryActivity.class);
+        intent.putExtra("history", history);
+        startActivity(intent);
     }
 
 }

@@ -1,6 +1,10 @@
 package com.example.gridsim.Model;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.android.volley.RequestQueue;
+import com.example.gridsim.Poller;
 
 import java.util.HashMap;
 
@@ -8,6 +12,15 @@ import static java.lang.Integer.parseInt;
 
 public class GridCellFactory {
     public HashMap<Integer, GardenerItem> map = new HashMap<>();
+
+    private static GridCellFactory _factory;
+
+    public static GridCellFactory getInstance(){
+        if(_factory == null){
+            _factory = new GridCellFactory();
+        }
+        return _factory;
+    }
 
     public GridCell makeCell(int val, int location){
         if(val == 1000 || val > 1000 && val < 2000 || val == 2002 || val == 2003 || val == 3000){

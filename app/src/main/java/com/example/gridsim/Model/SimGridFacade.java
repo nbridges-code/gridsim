@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -24,7 +25,9 @@ public class SimGridFacade {
     GridAdapter gridAdapter;
     SimulationGrid grid;
     GridCellFactory factory;
+    GridCell current = null;
     private static final String TAG = "gridView";
+    private int lastClickedID = -1;
 
     public SimGridFacade(MainActivity act, Context c){
         main = act;
@@ -32,7 +35,7 @@ public class SimGridFacade {
         gridAdapter = new GridAdapter(c);
         gridView.setAdapter(gridAdapter);
         grid = new SimulationGrid();
-        factory = new GridCellFactory();
+        factory = GridCellFactory.getInstance();
         EventBus.getDefault().register(this);
     }
 
@@ -58,6 +61,7 @@ public class SimGridFacade {
                 if(grid.getCell(position).getResourceID() != -1){
                     pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
                     Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
+                    updateCurrentCell(grid.getCell(position));
                 } else {
                     pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo());
                     Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
@@ -65,4 +69,16 @@ public class SimGridFacade {
             }
         });
     }
+
+    public String currentCellInfo(){
+        if(current == null){
+            return "";
+        }
+        return current.getCellInfo();
+    }
+
+    public void updateCurrentCell(GridCell next){
+        current = next;
+    }
+
 }

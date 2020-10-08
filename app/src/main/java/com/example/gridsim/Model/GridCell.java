@@ -47,6 +47,7 @@ public class GridCell {
             return String.valueOf(rawServerValue);
         }
     }
+
     public String getCellInfo() { // returns a string describing other info about the object (such as location)
         return "(row:" + row + ", col:" + col + ") at index:" + location;
     }
