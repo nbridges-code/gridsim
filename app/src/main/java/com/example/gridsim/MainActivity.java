@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         btn1 = (Button) findViewById(R.id.button1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                // pause
+                facade.paused = !facade.paused;
+                Log.d(TAG, "paused " + facade.paused);
             }
         });
         btn2 = (Button) findViewById(R.id.button2);

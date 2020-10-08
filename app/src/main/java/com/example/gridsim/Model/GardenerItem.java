@@ -41,7 +41,10 @@ public class GardenerItem extends GridCell{
         this.location = location;
     }
 
-    public String getCellInfo() { // returns a string describing other info about the object (such as location)
-        return "(row:" + row + ", col:" + col + ") at index:" + location + "\n" + history.toString();
+    public String getCellInfo(boolean printHistoryToo) { // returns a string describing other info about the object (such as location)
+        if(printHistoryToo){
+            return getCellType() + " ID: " + getResourceID() + " (row:" + row + ", col:" + col + ") at index:" + location + "\n" + history.toString();
+        }
+        return getCellType() + " ID: " + getResourceID() + " (row:" + row + ", col:" + col + ") at index:" + location;
     }
 }

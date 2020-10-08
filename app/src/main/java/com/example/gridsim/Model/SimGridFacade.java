@@ -28,6 +28,7 @@ public class SimGridFacade {
     GridCell current = null;
     private static final String TAG = "gridView";
     private int lastClickedID = -1;
+    public boolean paused = false;
 
     public SimGridFacade(MainActivity act, Context c){
         main = act;
@@ -51,20 +52,19 @@ public class SimGridFacade {
             grid.setCell(i, factory.makeCell((int) array.getJSONArray(i/16).get(i%16), i));
         }
         gridAdapter.copySimulationGrid(grid);
-        gridView.invalidateViews();
+        if(!paused) {
+            gridView.invalidateViews();
+        }
     }
 
     public void displayPosition(){
         final TextView pos = (TextView) main.findViewById(R.id.pos);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo());
+                Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
                 if(grid.getCell(position).getResourceID() != -1){
-                    pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
-                    Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo() + " " + grid.getCell(position).getCellType() + " ID:" + grid.getCell(position).getResourceID());
                     updateCurrentCell(grid.getCell(position));
-                } else {
-                    pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo());
-                    Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
                 }
             }
         });
