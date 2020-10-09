@@ -61,8 +61,8 @@ public class SimGridFacade {
         final TextView pos = (TextView) main.findViewById(R.id.pos);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo());
-                Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo());
+                pos.setText(grid.getCell(position).getCellType()+ " at "+grid.getCell(position).getCellInfo(false));
+                Log.d(TAG, grid.getCell(position).getCellType()+ " at " +grid.getCell(position).getCellInfo(false));
                 if(grid.getCell(position).getResourceID() != -1){
                     updateCurrentCell(grid.getCell(position));
                 }
@@ -70,11 +70,11 @@ public class SimGridFacade {
         });
     }
 
-    public String currentCellInfo(){
+    public String currentCellInfo(boolean historyDisplay){
         if(current == null){
             return "";
         }
-        return current.getCellInfo();
+        return current.getCellInfo(historyDisplay);
     }
 
     public void updateCurrentCell(GridCell next){

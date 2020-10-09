@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                showHistory(facade.currentCellInfo());
+                showHistory(facade.currentCellInfo(true));
                 // Log.d(TAG, facade.currentCellInfo());
             }
         });
