@@ -1,4 +1,3 @@
-// Toast button code by Sabith Pkc Mnr on YouTube
 package com.example.gridsim;
 
 import androidx.appcompat.app.AppCompatActivity;
